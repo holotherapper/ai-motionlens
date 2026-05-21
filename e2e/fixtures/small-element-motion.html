@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — small element motion vs page-wide pixel CV</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  /* The element is intentionally small relative to the 1280x800
+     viewport so that translating it 100px contributes a per-frame
+     pixel-delta well under NO_MOTION_FLOOR — the same shape as a
+     hero-word stagger. is_static must be reconciled with
+     per_target_easing: otherwise this configuration trips the
+     `non-static` correctness gate even though the motion is clearly
+     observable in the layout snapshot. */
+  #chip {
+    position: absolute;
+    top: 380px; left: 80px;
+    width: 36px; height: 16px;
+    background: #1f6feb;
+    transform: translateY(20px);
+    animation: chip-rise 600ms linear forwards;
+  }
+  @keyframes chip-rise {
+    from { transform: translateY(20px); }
+    to   { transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+  <div id="chip"></div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — parent static, children animate</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  /* Classic "text stagger" pattern: the wrapping element (`#hero-lede`)
+     stays fixed in place, but each `.word` child slides up under its
+     own `@keyframes`. Without a parent-of-moving hint, an agent that
+     declared `expected_targets: ["#hero-lede"]` only gets a
+     `raf-source-stalled` candidate-cause list (none of which apply —
+     the page IS animating, on the children). The hint should
+     name the moving descendants explicitly. */
+  #hero-lede {
+    position: absolute; top: 200px; left: 80px;
+    font-size: 48px; font-weight: 700; color: #111;
+  }
+  .word {
+    display: inline-block;
+    margin-right: 12px;
+    transform: translateY(20px);
+    animation: word-rise 600ms linear forwards;
+  }
+  .word:nth-child(2) { animation-delay: 120ms; }
+  .word:nth-child(3) { animation-delay: 240ms; }
+  @keyframes word-rise {
+    from { transform: translateY(20px); }
+    to   { transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+  <h1 id="hero-lede">
+    <span class="word">design</span><span class="word">in</span><span class="word">motion</span>
+  </h1>
+</body>
+</html>

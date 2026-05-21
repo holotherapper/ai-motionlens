@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — silently offset-stuck (clip/offscreen)</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #ffffff; }
+  /* A heading that is SMALL by area (~1.4% of a 1280x800 viewport, well
+     under the 6% prominence floor) but offset far below the fold and
+     never animates back — a broken reveal (e.g. GSAP yPercent vs CSS
+     translateY unit mismatch). An area-only detector misses this; the
+     effectively-invisible path must catch it. */
+  .headline {
+    position: absolute; top: 40px; left: 40px;
+    width: 300px; height: 56px; font-size: 44px; white-space: nowrap;
+    transform: translateY(2000px);   /* far below the 800px viewport */
+  }
+  /* A small box that DOES animate on load, so moved_selectors is
+     non-empty and the page is not is_static. */
+  .box {
+    position: absolute; top: 300px; left: 0;
+    width: 70px; height: 70px; background: #3366ff;
+    animation: slide 1000ms linear forwards;
+  }
+  @keyframes slide { from { left: 0; } to { left: 800px; } }
+</style>
+</head>
+<body>
+  <div class="headline" id="headline">Reveal Me</div>
+  <div class="box" id="box"></div>
+</body>
+</html>

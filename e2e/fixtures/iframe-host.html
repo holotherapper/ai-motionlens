@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>iframe host</title></head>
+<body>
+<h1>host</h1>
+<!--
+  Use srcdoc rather than an external src so the iframe inherits the host's
+  origin under file://. CDP same-origin iframe support requires the
+  agent to be able to reach contentDocument from the host page, which is
+  blocked for cross-file:// frames.
+-->
+<iframe
+  name="child"
+  width="600"
+  height="400"
+  srcdoc="&lt;!doctype html&gt;&lt;html&gt;&lt;body style='margin:0;padding:16px;font-family:sans-serif;background:#ffe'&gt;&lt;div id='flag' style='padding:8px;background:#ddd'&gt;off&lt;/div&gt;&lt;button id='inner-btn' onclick=&quot;document.getElementById('flag').textContent='on';document.getElementById('flag').style.background='#cf9'&quot;&gt;toggle&lt;/button&gt;&lt;/body&gt;&lt;/html&gt;"
+></iframe>
+</body>
+</html>

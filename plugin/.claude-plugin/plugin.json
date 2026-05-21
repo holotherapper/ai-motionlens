@@ -1,0 +1,8 @@
+{
+  "name": "ai-motionlens",
+  "version": "0.1.0",
+  "description": "AI-driven web animation verification via virtual-clock observation",
+  "author": {
+    "name": "holotherapper"
+  }
+}

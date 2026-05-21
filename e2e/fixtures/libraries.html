@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>library stubs</title></head>
+<body>
+<div id="root">library inspectors fixture</div>
+<script>
+  // Minimal GSAP shape sufficient for library.gsap_state.
+  window.gsap = {
+    globalTimeline: {
+      time: () => 0.5,
+      progress: () => 0.5,
+      totalDuration: () => 1.0,
+      paused: () => false,
+    },
+  };
+  // ScrollTrigger global with one fake instance.
+  window.ScrollTrigger = {
+    getAll: () => [{
+      vars: { id: 'hero-pin', scrub: true, pin: true },
+      trigger: { id: 'hero' },
+      progress: 0.25,
+      isActive: true,
+      start: 0,
+      end: 1000,
+    }],
+  };
+  // Minimal Lenis shape.
+  window.lenis = {
+    scroll: 120,
+    velocity: 8,
+    isStopped: false,
+    limit: 4000,
+  };
+  // Minimal Lottie (bodymovin) shape.
+  window.lottie = {
+    getRegisteredAnimations: () => [{
+      currentFrame: 30,
+      totalFrames: 60,
+      isPaused: false,
+      isLoaded: true,
+      name: 'loader',
+    }],
+  };
+</script>
+</body>
+</html>

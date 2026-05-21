@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>section scroll fixture</title>
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: #fff; }
+  .above { height: 2000px; background: linear-gradient(#fff, #eef); display:flex; align-items:center; justify-content:center; font:18px sans-serif; }
+  #scrub-section { height: 2400px; background: linear-gradient(#eef, #fee); position: relative; }
+  .pinned { position: sticky; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; background: #28e; border-radius: 24px; }
+  .below { height: 800px; background: #eee; }
+</style></head>
+<body>
+  <div class="above">scroll past this section</div>
+  <div id="scrub-section">
+    <div class="pinned" id="hero"></div>
+  </div>
+  <div class="below">end</div>
+  <script>
+    function update() {
+      const sec = document.getElementById('scrub-section');
+      const r = sec.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const startY = sec.offsetTop - vh;
+      const endY = sec.offsetTop + sec.offsetHeight;
+      const sy = window.scrollY;
+      const p = Math.max(0, Math.min(1, (sy - startY) / (endY - startY)));
+      const el = document.getElementById('hero');
+      el.style.transform = `translate(-50%, -50%) scale(${1 + p * 1.5}) rotate(${p * 360}deg)`;
+      el.style.background = `hsl(${200 + p * 160}, 80%, 50%)`;
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  </script>
+</body></html>

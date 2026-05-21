@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — suggest → verify roundtrip</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  /* A hero entrance starting at opacity:0 and translateY(12px). Before
+     the hidden_selectors-aware classifier, motion.suggest_intent saw
+     this as `appearance + translate + fade` (because the element was
+     filtered out of the t=0 snapshot via the opacity-zero rule, then
+     reappeared mid-window), while motion.verify with the same target
+     in `expected_targets` saw it as `fade + translate` (the bypass
+     kept the element in the snapshot the whole time). Feeding the
+     `suggested_intent` into `expected_kinds` then made verify fail on
+     `expected_kinds_missing: ["appearance"]` — a contradiction caused
+     purely by observer knowledge.
+
+     This fixture exists to nail down the regression: a single canonical
+     hero entrance pattern that both tools must classify identically. */
+  #hero-cta {
+    position: absolute; top: 80px; left: 80px;
+    width: 240px; height: 48px; background: #1f6feb;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: enter 600ms linear forwards;
+  }
+  @keyframes enter {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+  <a id="hero-cta" href="#">Get started</a>
+</body>
+</html>

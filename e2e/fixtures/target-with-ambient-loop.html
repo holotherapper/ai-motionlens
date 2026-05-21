@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — short target + ambient loop</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  /* `#chip` is the intent target: it translates 20px upward in 600ms
+     and settles. `#blob` is an unrelated ambient loop running for
+     6 seconds — the scenario where extending `target_times_ms` to
+     capture the ambient inflates `observed_coverage_ms` and
+     false-fails duration_match. */
+  #chip {
+    position: absolute; top: 380px; left: 80px;
+    width: 60px; height: 60px; background: #1f6feb;
+    transform: translateY(20px);
+    animation: chip-rise 600ms cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+  }
+  @keyframes chip-rise {
+    from { transform: translateY(20px); }
+    to   { transform: translateY(0); }
+  }
+
+  #blob {
+    position: absolute; top: 600px; left: 80px;
+    width: 240px; height: 80px;
+    background: #ee9a3f;
+    animation: blob-drift 6000ms linear infinite;
+  }
+  @keyframes blob-drift {
+    from { transform: translateX(0); }
+    to   { transform: translateX(300px); }
+  }
+</style>
+</head>
+<body>
+  <div id="chip"></div>
+  <div id="blob"></div>
+</body>
+</html>

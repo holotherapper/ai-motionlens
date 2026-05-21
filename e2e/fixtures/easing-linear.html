@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens easing fixture — linear translate</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100vh; background: #fafafa; font-family: -apple-system, sans-serif; }
+  .stage { position: relative; width: 100%; height: 100%; }
+  .box {
+    width: 120px;
+    height: 120px;
+    background: #d33;
+    position: absolute;
+    top: 200px;
+    left: 0;
+    transform: translateX(0px);
+  }
+  .box.go {
+    transition: transform 1000ms linear;
+    transform: translateX(1000px);
+  }
+  .label { padding: 20px; font-size: 18px; color: #333; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="label">linear translate fixture — `.box` translates 0→1000px over 1000ms linear when `.go` is added.</div>
+    <div class="box" id="box"></div>
+  </div>
+  <script>
+    // Expose a function the test driver can call to start the animation
+    // deterministically. Without this, the animation would start during
+    // page load (in wall-clock time) and the agent would observe it
+    // mid-flight when sampling t=0.
+    window.startAnimation = function () {
+      document.getElementById('box').classList.add('go');
+    };
+  </script>
+</body>
+</html>

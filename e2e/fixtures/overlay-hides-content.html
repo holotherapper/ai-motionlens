@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — fullscreen overlay over animating content</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  /* A small chip animates underneath, but a fullscreen loader sits
+     on top covering the entire viewport for the whole sample window
+     (it would fade out at t=3000ms, after our window). The contact
+     sheet looks like nothing but the loader; without the
+     `viewport-covered-by-overlay` hint, an agent can't tell whether
+     the page is broken or just hidden behind a splash. */
+  #chip {
+    position: absolute;
+    top: 380px; left: 80px;
+    width: 80px; height: 80px;
+    background: #1f6feb;
+    transform: translateY(20px);
+    animation: chip-rise 600ms linear forwards;
+  }
+  @keyframes chip-rise {
+    from { transform: translateY(20px); }
+    to   { transform: translateY(0); }
+  }
+  #loader {
+    position: fixed;
+    inset: 0;
+    background: #0a0a14;
+    z-index: 9999;
+    /* The loader stays opaque until t=3000ms — long after our
+       sample plan. */
+  }
+</style>
+</head>
+<body>
+  <div id="chip"></div>
+  <div id="loader"></div>
+</body>
+</html>

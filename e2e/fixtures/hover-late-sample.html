@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — late-sampled hover transition</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  /* A CSS transition that completes in 80ms with a sharp ease-out
+     curve. The fixture covers late-landing contract samples: when the
+     samples land *after* the transition has nearly completed (e.g.
+     t = 60..180ms with the transition settling at ~80ms), every
+     adjacent frame-pair's translate delta sits under
+     `classify_transition`'s 0.5px threshold (the curve runs at
+     [-9.35, -9.74, -9.94, -10, -10]), so the per-pair classifier
+     never emits `translate` — yet `per_target_easing` clearly fits
+     `axis: transform-translate-y` with a 10px amplitude. The
+     reconciliation pass folds per_target_easing axes back into
+     `detected_motion_kinds` so a contract declaring
+     `expected_kinds: ["translate"]` does not get
+     `expected_kinds_missing: ["translate"]` on this pattern. */
+  #card {
+    position: absolute; top: 200px; left: 100px;
+    width: 240px; height: 120px; background: #d3d3d3;
+    transition: transform 80ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  #card.lift { transform: translateY(-10px); }
+</style>
+</head>
+<body>
+  <div id="card"></div>
+  <script>
+    // The trigger flips `.lift` on at t=0 in virtual time. The
+    // ease-out completes by ~80ms, so the late samples (60ms+) catch
+    // only the curve's tail.
+    document.addEventListener('motionlens:start', () => {
+      document.getElementById('card').classList.add('lift');
+    });
+    // For a manual repro without the dispatch hook (e.g. opening in a
+    // browser), add the class after the next paint.
+    requestAnimationFrame(() => {
+      document.getElementById('card').classList.add('lift');
+    });
+  </script>
+</body>
+</html>

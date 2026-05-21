@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens jank fixture — trigger-gated</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100vh; background: #fafafa; }
+  .box {
+    width: 120px; height: 120px; background: #33d;
+    position: absolute; top: 200px; left: 0;
+  }
+  /* The jank only arms when `.go` is added by the trigger, so the sudden
+     200px -> 700px jump at the 20% mark happens UNDER the virtual clock
+     (not during wall-clock page load). This is the clean fixture for
+     verifying positional-discontinuity jank detection. */
+  .box.go { animation: jankymove 1000ms linear forwards; }
+  @keyframes jankymove {
+    0%    { left: 0; }
+    20%   { left: 200px; }
+    20.1% { left: 700px; }   /* sudden jank jump */
+    40%   { left: 720px; }
+    100%  { left: 1000px; }
+  }
+</style>
+</head>
+<body>
+  <div class="box" id="box"></div>
+  <script>
+    // Deterministic start hook, mirrors easing-linear.html. Without this
+    // the animation would run during wall-clock load and be observed
+    // mid-flight at virtual t=0.
+    window.startJank = function () {
+      document.getElementById('box').classList.add('go');
+    };
+  </script>
+</body>
+</html>

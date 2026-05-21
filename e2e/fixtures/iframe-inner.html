@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"><title>iframe inner</title>
+<style>
+  body { margin: 0; padding: 16px; font-family: sans-serif; background: #ffe; }
+  #flag { padding: 8px; background: #ddd; }
+  #flag.on { background: #cf9; color: #050; }
+</style>
+</head>
+<body>
+<div id="flag">off</div>
+<button id="inner-btn" onclick="document.getElementById('flag').textContent='on'; document.getElementById('flag').className='on'">toggle</button>
+</body>
+</html>

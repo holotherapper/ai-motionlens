@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>broken layout fixture</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100vh; overflow: hidden; font-family: -apple-system, sans-serif; background: #fff; }
+  .keep {
+    position: absolute; width: 200px; height: 100px;
+    background: #ddf; padding: 16px; border-radius: 8px;
+  }
+  #card-a { top: 40px; left: 40px; }
+  #card-b { top: 40px; left: 280px; }
+  .overflow-card {
+    position: absolute; top: 40px; left: 900px; width: 600px; height: 100px;
+    background: #fdd; padding: 16px; border-radius: 8px;
+  }
+  .silence-me {
+    position: absolute; top: 200px; left: 40px; width: 150px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    background: #efe; padding: 8px; border: 1px solid #aaa;
+  }
+  .clipped-content {
+    position: absolute; top: 280px; left: 40px; width: 200px; height: 60px;
+    overflow: hidden;
+    background: #ffe; padding: 8px; border: 1px solid #aaa;
+  }
+  .off-screen {
+    position: absolute; top: -200px; left: 200px; width: 100px; height: 100px;
+    background: red;
+  }
+  .stack-a {
+    position: absolute; top: 400px; left: 40px; width: 200px; height: 80px;
+    background: #88f; color: white; padding: 10px;
+  }
+  .stack-b {
+    position: absolute; top: 410px; left: 50px; width: 200px; height: 80px;
+    background: #f88; color: white; padding: 10px;
+  }
+</style></head>
+<body>
+  <div class="keep" id="card-a">card A</div>
+  <div class="keep" id="card-b">card B</div>
+  <div class="overflow-card">Goes off the right edge of the viewport</div>
+  <div class="silence-me">This is a really long line of text that will absolutely get truncated</div>
+  <div class="clipped-content">
+    <p>Para 1</p><p>Para 2</p><p>Para 3</p><p>Para 4</p><p>Para 5</p>
+  </div>
+  <div class="off-screen">Off-screen above</div>
+  <div class="stack-a">A (z=auto)</div>
+  <div class="stack-b">B (z=auto)</div>
+</body></html>

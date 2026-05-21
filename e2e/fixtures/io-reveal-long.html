@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — IO-driven reveal on a long page</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; font-family: system-ui, sans-serif; }
+  body { height: 3000px; }
+  .panel {
+    position: absolute; left: 80px; width: 240px; height: 160px;
+    background: #1f6feb;
+    opacity: 0;
+    transition: opacity 200ms linear;
+  }
+  .panel.is-revealed { opacity: 1; }
+  #p1 { top: 100px; }
+  #p2 { top: 1100px; }
+  #p3 { top: 2200px; }
+</style>
+</head>
+<body>
+  <div id="p1" class="panel" data-reveal></div>
+  <div id="p2" class="panel" data-reveal></div>
+  <div id="p3" class="panel" data-reveal></div>
+  <script>
+    // Standard "reveal on intersection" pattern. Without the
+    // include_final_fullpage_screenshot pre-scroll primer, #p2 and
+    // #p3 stay at opacity:0 in the fullpage shot because the
+    // captureBeyondViewport rendering doesn't move the visual
+    // viewport.
+    const io = new IntersectionObserver(entries => {
+      for (const e of entries) {
+        if (e.isIntersecting) e.target.classList.add('is-revealed');
+      }
+    }, { threshold: 0.1 });
+    document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

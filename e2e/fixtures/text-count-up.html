@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — text count-up</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; font-family: monospace; }
+  #stat {
+    position: absolute; top: 200px; left: 100px;
+    font-size: 96px; font-weight: 700; color: #111;
+    /* The element's bbox / opacity / transform must NOT animate so the
+       motion classifier only catches the change via text_content. */
+  }
+</style>
+</head>
+<body>
+  <div id="stat">0</div>
+  <script>
+    // A typical Stats count-up. The text content rolls 0 → 247 over
+    // 800ms using the rAF `t` argument (virtual-clock friendly — see
+    // SKILL.md "Animating under the virtual clock"). The bbox stays
+    // the same width up to character spacing; we keep the size buffer
+    // small enough that classify_transition would not catch a bbox
+    // delta even when it nudges by half a pixel.
+    const stat = document.getElementById('stat');
+    const FINAL = 247;
+    const DURATION_MS = 800;
+    let t0 = null;
+    function tick(t) {
+      if (t0 === null) t0 = t;
+      const progress = Math.min(1, (t - t0) / DURATION_MS);
+      stat.textContent = String(Math.floor(progress * FINAL));
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

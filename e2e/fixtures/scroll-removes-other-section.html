@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — scroll removes sibling section</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  body { height: 2400px; }
+  /* `#hero` sits at the top and a scroll past it pushes it out of
+     the viewport (the layout probe drops it). `#card` sits below
+     the fold and is the agent's expected_target. The
+     forbidden_kinds scope must stay limited to the expected_target:
+     declaring `forbidden_kinds: ["disappearance"]` on a card contract
+     must not false-fail just because the unrelated `#hero` section
+     "disappeared" in the scroll-then-card sequence. */
+  #hero {
+    position: absolute; top: 0; left: 0;
+    width: 1280px; height: 700px;
+    background: #f8e3a4;
+  }
+  #card {
+    position: absolute; top: 1200px; left: 80px;
+    width: 200px; height: 120px;
+    background: #d3d3d3;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: card-rise 600ms linear forwards;
+    animation-delay: 50ms;
+  }
+  @keyframes card-rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+  <div id="hero"></div>
+  <div id="card"></div>
+</body>
+</html>

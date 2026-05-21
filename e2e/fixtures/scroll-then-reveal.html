@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — scroll trigger + static reveal</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  /* Two cards sit at y=1600 (off-screen at load). After scrollY=900
+     they enter the viewport. They are STATIC on the document — no
+     translate animation runs on them. scroll_y reconciliation must
+     account for the scroll offset: without it this configuration
+     trips a false `overshoot_event` with `peak_progress=2.04` on
+     every visible element because the bbox-centre shifts by 900px
+     the moment the scroll fires. */
+  body { height: 2600px; }
+  .card {
+    position: absolute;
+    width: 200px; height: 120px;
+    background: #d3d3d3;
+  }
+  #card-1 { top: 1600px; left:  80px; }
+  #card-2 { top: 1600px; left: 320px; }
+</style>
+</head>
+<body>
+  <div id="card-1" class="card"></div>
+  <div id="card-2" class="card"></div>
+</body>
+</html>

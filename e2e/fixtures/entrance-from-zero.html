@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — entrance from opacity:0</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #ffffff; }
+  /* The canonical hero-entrance pattern: opacity:0 at t=0, fades in via
+     a CSS @keyframes animation. The element is invisible in the very
+     first layout snapshot, so the visibility filter must not drop it:
+     motion.verify still has to resolve the selector and observe the
+     animation rather than reporting `selector-not-found`. */
+  .eyebrow {
+    position: absolute; top: 80px; left: 80px;
+    width: 280px; height: 40px; background: #2a6;
+    opacity: 0;
+    animation: fade-in 600ms linear forwards;
+  }
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+  <div class="eyebrow" id="eyebrow"></div>
+</body>
+</html>

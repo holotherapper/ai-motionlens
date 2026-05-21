@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — CDP hover :hover pseudo-class activation</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  #btn {
+    position: absolute; top: 200px; left: 200px;
+    width: 200px; height: 60px;
+    background: #444; color: #fff;
+    border: none;
+    /* No transition / no @keyframes — only the static `:hover`
+       style. That keeps the test focused on whether the pseudo
+       class is correctly activated by `trigger.hover input_mode:
+       cdp`. The transition timing fight is a separate known
+       limitation; see SKILL.md "Reaching CSS :hover ..." note. */
+  }
+  #btn:hover {
+    background: #1f6feb;
+  }
+</style>
+</head>
+<body>
+  <button id="btn">Hover me</button>
+</body>
+</html>

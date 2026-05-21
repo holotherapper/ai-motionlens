@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — performance.now()-anchored rAF stalls</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #ffffff; }
+  /* A loader bar driven by a performance.now()-anchored rAF — the
+     standard JS pattern that fails to advance in lock-step with the
+     virtual clock. The bar stalls and the hero reveal that depends on
+     it never fires. */
+  .bar { position: absolute; top: 40px; left: 40px;
+         width: 0; height: 20px; background: #39d; }
+  /* A CSS-animated box that DOES move on load — keeps the page
+     non-static and gives some moved_selectors, so the
+     raf-source-stalled hint's `!is_static` precondition holds. */
+  .box { position: absolute; top: 100px; left: 0;
+         width: 60px; height: 60px; background: #3366ff;
+         animation: slide 1000ms linear forwards; }
+  /* The hero reveal that depends on the loader completing — it stays
+     opacity:0 because `.hero.ready` is never toggled. */
+  .hero { position: absolute; top: 200px; left: 40px;
+          font-size: 48px; opacity: 0; transition: opacity 300ms linear; }
+  .hero.ready { opacity: 1; }
+  /* A deliberately-static target. Exercises the raf-source-stalled hint
+     condition (rAF source IS active, page IS animating, but THIS named
+     intent target stays still — exactly the scenario of a
+     reveal that depends on a stalled rAF chain). */
+  .pending { position: absolute; top: 320px; left: 60px;
+             width: 200px; height: 32px; background: #ddd; }
+  @keyframes slide { from { left: 0; } to { left: 800px; } }
+</style>
+</head>
+<body>
+  <div class="bar" id="bar"></div>
+  <div class="box" id="box"></div>
+  <h1 class="hero" id="hero">Reveal</h1>
+  <div class="pending" id="pending"></div>
+  <script>
+    // BROKEN PATTERN: performance.now() as the time origin.
+    // performance.now() does not advance in lock-step with the virtual
+    // rAF tick, so `dt` stays near zero and the loop never reaches
+    // p=1 — the hero `.ready` toggle never runs, the hero stays hidden.
+    var start = performance.now();
+    function tick() {
+      var dt = performance.now() - start;
+      var p = Math.min(dt / 1000, 1);
+      document.getElementById('bar').style.width = (p * 800) + 'px';
+      if (p < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        document.getElementById('hero').classList.add('ready');
+      }
+    }
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

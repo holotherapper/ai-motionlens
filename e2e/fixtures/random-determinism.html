@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens random determinism fixture</title>
+</head>
+<body>
+  <div id="output"></div>
+  <script>
+    // Generate ten numbers from Math.random and one from crypto.getRandomValues
+    // and expose them as a JSON string the test driver can read back.
+    const rs = [];
+    for (let i = 0; i < 10; i++) rs.push(Math.random());
+    const buf = new Uint32Array(4);
+    crypto.getRandomValues(buf);
+    window.__sample = JSON.stringify({
+      math_random: rs,
+      crypto: Array.from(buf),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      locale: navigator.language,
+      user_agent: navigator.userAgent,
+    });
+    document.getElementById('output').textContent = window.__sample;
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "ai-motionlens",
+  "owner": {
+    "name": "holotherapper"
+  },
+  "metadata": {
+    "description": "AI-driven web animation verification via virtual-clock observation",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "ai-motionlens",
+      "description": "33 MCP tools that freeze the browser virtual clock, capture deterministic frames, and verify animation quality — so AI coding agents can autonomously develop web animations",
+      "version": "0.1.0",
+      "source": "./plugin",
+      "category": "development",
+      "author": {
+        "name": "holotherapper"
+      },
+      "homepage": "https://github.com/holotherapper/ai-motionlens",
+      "repository": "https://github.com/holotherapper/ai-motionlens",
+      "license": "MIT OR Apache-2.0",
+      "keywords": ["mcp", "animation", "browser", "testing", "virtual-clock", "cdp"]
+    }
+  ]
+}

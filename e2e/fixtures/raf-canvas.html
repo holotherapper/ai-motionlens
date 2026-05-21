@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — pure rAF canvas (no CSS source)</title>
+<style>
+  /* Intentionally NO CSS animation / transition / @keyframes anywhere:
+     this page's only motion is a requestAnimationFrame loop drawing to a
+     <canvas>. It is the canonical case the CSS/WAAPI coverage model
+     cannot see (the same shape as Three.js / WebGL). */
+  html, body { margin: 0; padding: 0; height: 100vh; background: #0b0b12; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+  <canvas id="c" width="1280" height="800"></canvas>
+  <script>
+    const cv = document.getElementById('c');
+    const ctx = cv.getContext('2d');
+    const t0 = performance.now();
+    function frame(now) {
+      const t = (now - t0) / 1000;
+      ctx.fillStyle = '#0b0b12';
+      ctx.fillRect(0, 0, 1280, 800);
+      const x = 100 + ((t * 600) % 1000);
+      ctx.fillStyle = '#4af';
+      ctx.fillRect(x, 340, 120, 120);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  </script>
+</body>
+</html>

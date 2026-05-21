@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ai-motionlens fixture — silently-static prominent element</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #ffffff; }
+  /* A large, visually prominent hero band that NEVER animates — the
+     "undeclared element silently broken" case. It is ~36% of a
+     1280x800 viewport, well past the 6% prominence floor. */
+  .hero {
+    position: absolute; top: 40px; left: 40px;
+    width: 1100px; height: 340px; background: #1a1a22;
+  }
+  /* A small box that DOES animate on load, so moved_selectors is
+     non-empty and the page is not is_static — the hint must fire even
+     though the page clearly has motion. */
+  .box {
+    position: absolute; top: 520px; left: 0;
+    width: 80px; height: 80px; background: #3366ff;
+    animation: slide 1000ms linear forwards;
+  }
+  @keyframes slide { from { left: 0; } to { left: 900px; } }
+</style>
+</head>
+<body>
+  <div class="hero" id="hero"></div>
+  <div class="box" id="box"></div>
+</body>
+</html>

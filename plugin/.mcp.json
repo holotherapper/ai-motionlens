@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "ai-motionlens": {
+      "command": "ai-motionlens-mcp"
+    }
+  }
+}

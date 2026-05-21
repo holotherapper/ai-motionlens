@@ -1,0 +1,33 @@
+[package]
+name = "ai-motionlens-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+description = "Core library for ai-motionlens: drive a Chrome browser via CDP, control animation timeline, capture frames with metadata."
+
+[lints]
+workspace = true
+
+[dependencies]
+chromiumoxide.workspace = true
+tokio.workspace = true
+futures.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+schemars.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+image.workspace = true
+png = "0.18"
+base64.workspace = true
+dirs.workspace = true
+tempfile.workspace = true
+async-trait = "0.1"
+uuid = { version = "1", features = ["v4", "serde"] }

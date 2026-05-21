@@ -1,0 +1,54 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/core",
+    "crates/mcp",
+    "crates/cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/holotherapper/ai-motionlens"
+homepage = "https://github.com/holotherapper/ai-motionlens"
+authors = ["holotherapper"]
+keywords = ["mcp", "animation", "browser", "ai-agent", "playwright"]
+categories = ["development-tools::testing", "command-line-utilities"]
+
+[workspace.dependencies]
+ai-motionlens-core = { path = "crates/core", version = "0.1.0" }
+
+chromiumoxide = { version = "0.9", default-features = false }
+rmcp = { version = "1.7", features = ["server", "transport-io", "macros"] }
+clap = { version = "4.6", features = ["derive"] }
+
+tokio = { version = "1", features = ["full"] }
+futures = "0.3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+schemars = "1"
+anyhow = "1"
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif"] }
+base64 = "0.22"
+dirs = "5"
+tempfile = "3"
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+future_incompatible = { level = "warn", priority = -1 }
+nonstandard_style = "deny"
+
+[workspace.lints.clippy]
+redundant_clone = "deny"
+needless_collect = "deny"
+large_enum_variant = "warn"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
